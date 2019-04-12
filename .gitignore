@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs
+/Apresentacao/bin/Debug/netcoreapp2.2
+/Apresentacao/obj
