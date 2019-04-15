@@ -51,6 +51,8 @@ namespace Apresentacao.Controllers
 
                     securityToken = handler.CreateToken(new SecurityTokenDescriptor
                     {
+                        Issuer = _tokenConfiguration.Issuer,
+                        Audience = _tokenConfiguration.Audience,
                         SigningCredentials = _signingConfiguration.SigningCredentials,
                         Subject = identity,
                         NotBefore = dateCreation,

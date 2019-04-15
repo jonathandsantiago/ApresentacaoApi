@@ -39,10 +39,12 @@ namespace Apresentacao
             {
                 Microsoft.IdentityModel.Tokens.TokenValidationParameters paramsValidation = bearerOptions.TokenValidationParameters;
                 paramsValidation.IssuerSigningKey = signingConfiguration.Key;
+                paramsValidation.ValidAudience = tokenConfiguration.Audience;
+                paramsValidation.ValidIssuer = tokenConfiguration.Issuer;
 
                 paramsValidation.ValidateIssuerSigningKey = true;
                 paramsValidation.ValidateLifetime = true;
-                paramsValidation.ClockSkew = new TimeSpan(tokenConfiguration.ClockSkew);
+                paramsValidation.ClockSkew = TimeSpan.FromSeconds(tokenConfiguration.ClockSkew);
             });
 
             services.AddAuthorization(auth =>

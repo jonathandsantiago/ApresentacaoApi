@@ -1,18 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Apresentacao.Profiles;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 
 namespace Apresentacao.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize("Bearer")]
     public class ValuesController : ControllerBase
     {
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return GetClaims();
         }
 
         // GET api/values/5
@@ -38,6 +42,17 @@ namespace Apresentacao.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        private List<string> GetClaims()
+        {
+            if (User == null)
+            {
+                return null;
+            }
+
+            ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+            return identity?.Claims.Select(c => c.Value).ToList() ?? new List<string>();
         }
     }
 }
