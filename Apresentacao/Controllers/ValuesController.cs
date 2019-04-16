@@ -1,6 +1,6 @@
-﻿using Apresentacao.Profiles;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -14,9 +14,16 @@ namespace Apresentacao.Controllers
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult Get()
         {
-            return GetClaims();
+            try
+            {
+                return Ok(GetClaims());
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
         // GET api/values/5
